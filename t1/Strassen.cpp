@@ -1,6 +1,4 @@
-*/
-Cambiarlo a Strassen recursivo
-/*
+// Cambiarlo a Strassen recursivo
 
 #include <iostream>
 #include <chrono>

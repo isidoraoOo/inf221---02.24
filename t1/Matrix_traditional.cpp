@@ -1,11 +1,33 @@
-
 #include <iostream>
-#include <chrono>
 #include <fstream>
-#include <string>
 #include <cstdlib>
+#include <cmath>
+#include <chrono>
 using namespace std;
 using namespace std::chrono;
+
+void crear_arch(int n) {
+    ofstream archivo("matrices.txt");
+    archivo << "A " << n << " " << n << "\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int a = rand() % 1000;
+            archivo << a << " ";
+        }
+        archivo << "\n";
+    }
+
+    archivo << "B " << n << " " << n << "\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int b = rand() % 1000;
+            archivo << b << " ";
+        }
+        archivo << "\n";
+    }
+    
+    archivo.close();
+}
 
 void leerMatriz(ifstream& archivo, int** matriz, int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
@@ -26,83 +48,71 @@ void Matrix_multiplication(int n, int** A, int** B, int** C) {
     }
 }
 
-
 int main() {
-    string nombreArchivo = "matrices.txt"; 
-    ifstream archivo(nombreArchivo);
+    int iteraciones;
+    cout << "Iteraciones: ";
+    cin >> iteraciones;  
 
-    if (!archivo.is_open()) {
-        cerr << "Error al abrir el archivo!" << endl;
-        return 1;
-    }
-
-    string nombreMatriz;
-    int filas, columnas;
+    ofstream file("tiempos mtrx convencional.txt");
+    file << "Tiempos de ejecucion\n";
+    file << "Orden\n";
     
-    archivo >> nombreMatriz >> filas >> columnas;
+    for (int j = 1; j <= iteraciones; j++) {
+        file << pow(2, j) << "x" << pow(2, j) << ": ";
+        int n = pow(2, j);
+        crear_arch(n);
 
-    int** a = new int*[filas];
-    for (int i = 0; i < filas; i++) {
-        a[i] = new int[columnas];
-    }
-
-    leerMatriz(archivo, a, filas, columnas);
-
-    archivo >> nombreMatriz >> filas >> columnas;
-
-    int** b = new int*[filas];
-    for (int i = 0; i < filas; i++) {
-        b[i] = new int[columnas];
-    }
-
-    leerMatriz(archivo, b, filas, columnas);
-
-    int** c = new int*[filas];
-    for (int i = 0; i < filas; i++) {
-        c[i] = new int[columnas];
-    }
-
-
-    auto start = high_resolution_clock::now();
-    Matrix_multiplication(filas, a, b, c);
-    auto stop = high_resolution_clock::now();
-
-    cout << "\nMatriz A:" << endl;
-    for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-            cout << a[i][j] << " ";
+        ifstream archivo("matrices.txt");
+        if (!archivo.is_open()) {
+            cerr << "Error al abrir el archivo!" << endl;
+            return 1;
         }
-        cout << endl;
-    }
 
-    cout << "\nMatriz B:" << endl;
-    for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-            cout << b[i][j] << " ";
+        string nombreMatriz;
+        int filas, columnas;
+        
+        archivo >> nombreMatriz >> filas >> columnas;
+
+        int** A = new int*[filas];
+        for (int i = 0; i < filas; i++) {
+            A[i] = new int[columnas];
         }
-        cout << endl;
-    }
 
-    cout << "\nMatriz Resultante (AxB):" << endl;
-    for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-            cout << c[i][j] << " ";
+        leerMatriz(archivo, A, filas, columnas);
+
+        archivo >> nombreMatriz >> filas >> columnas;
+
+        int** B = new int*[filas];
+        for (int i = 0; i < filas; i++) {
+            B[i] = new int[columnas];
         }
-        cout << endl;
+
+        leerMatriz(archivo, B, filas, columnas);
+
+        int** C = new int*[filas];
+        for (int i = 0; i < filas; i++) {
+            C[i] = new int[columnas];
+        }
+
+        auto start = high_resolution_clock::now();
+        Matrix_multiplication(filas, A, B, C);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        file << duration.count() << " nanosegundos " << duration.count() / 1000 << " microsegundos " << duration.count() / 1e9 << " segundos" <<"\n";
+
+        for (int i = 0; i < filas; i++) {
+            delete[] A[i];
+            delete[] B[i];
+            delete[] C[i];
+        }
+        delete[] A;
+        delete[] B;
+        delete[] C;
+
+        archivo.close();
+        remove("matrices.txt");
     }
 
-    for (int i = 0; i < filas; i++) {
-        delete[] a[i];
-        delete[] b[i];
-        delete[] c[i];
-    }
-    delete[] a;
-    delete[] b;
-    delete[] c;
-
-    auto duration = duration_cast<nanoseconds>(stop - start);
-    cout << "\nTiempo: " << duration.count() << endl;
-
-    archivo.close();
+    file.close();
     return 0;
 }

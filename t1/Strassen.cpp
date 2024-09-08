@@ -72,7 +72,6 @@ void strassen(int** A, int** B, int** C, int n) {
 
     int split = n / 2;
 
-    // Crear submatrices
     int** a00 = crearMatriz(split);
     int** a01 = crearMatriz(split);
     int** a10 = crearMatriz(split);
@@ -108,62 +107,48 @@ void strassen(int** A, int** B, int** C, int n) {
         }
     }
 
-    // Calcular los 7 productos de Strassen
 
-    // M1 = (A11 + A22) * (B11 + B22)
-    sumarMatrices(a00, a11, temp1, split); // A00 + A11
-    sumarMatrices(b00, b11, temp2, split); // B00 + B11
+    sumarMatrices(a00, a11, temp1, split);
+    sumarMatrices(b00, b11, temp2, split);
     strassen(temp1, temp2, m1, split);
 
-    // M2 = (A21 + A22) * B11
-    sumarMatrices(a10, a11, temp1, split); // A10 + A11
+    sumarMatrices(a10, a11, temp1, split);
     strassen(temp1, b00, m2, split);
 
-    // M3 = A11 * (B12 - B22)
-    restarMatrices(b01, b11, temp1, split); // B01 - B11
+    restarMatrices(b01, b11, temp1, split);
     strassen(a00, temp1, m3, split);
 
-    // M4 = A22 * (B21 - B11)
-    restarMatrices(b10, b00, temp1, split); // B10 - B00
+    restarMatrices(b10, b00, temp1, split);
     strassen(a11, temp1, m4, split);
 
-    // M5 = (A11 + A12) * B22
-    sumarMatrices(a00, a01, temp1, split); // A00 + A01
+    sumarMatrices(a00, a01, temp1, split);
     strassen(temp1, b11, m5, split);
 
-    // M6 = (A21 - A11) * (B11 + B12)
-    restarMatrices(a10, a00, temp1, split); // A10 - A00
-    sumarMatrices(b00, b01, temp2, split); // B00 + B01
+    restarMatrices(a10, a00, temp1, split);
+    sumarMatrices(b00, b01, temp2, split);
     strassen(temp1, temp2, m6, split);
 
-    // M7 = (A12 - A22) * (B21 + B22)
-    restarMatrices(a01, a11, temp1, split); // A01 - A11
-    sumarMatrices(b10, b11, temp2, split); // B10 + B11
+    restarMatrices(a01, a11, temp1, split);
+    sumarMatrices(b10, b11, temp2, split);
     strassen(temp1, temp2, m7, split);
 
-    // Calcular C00, C01, C10, C11
     int** c00 = crearMatriz(split);
     int** c01 = crearMatriz(split);
     int** c10 = crearMatriz(split);
     int** c11 = crearMatriz(split);
 
-    // C00 = M1 + M4 - M5 + M7
     sumarMatrices(m1, m4, temp1, split);
     restarMatrices(temp1, m5, temp2, split);
     sumarMatrices(temp2, m7, c00, split);
 
-    // C01 = M3 + M5
     sumarMatrices(m3, m5, c01, split);
 
-    // C10 = M2 + M4
     sumarMatrices(m2, m4, c10, split);
 
-    // C11 = M1 - M2 + M3 + M6
     restarMatrices(m1, m2, temp1, split);
     sumarMatrices(temp1, m3, temp2, split);
     sumarMatrices(temp2, m6, c11, split);
 
-    // Reconstruir la matriz resultado
     for (int i = 0; i < split; i++) {
         for (int j = 0; j < split; j++) {
             C[i][j] = c00[i][j];
@@ -173,7 +158,6 @@ void strassen(int** A, int** B, int** C, int n) {
         }
     }
 
-    // Liberar memoria de submatrices y temporales
     liberarMatriz(a00, split); liberarMatriz(a01, split);
     liberarMatriz(a10, split); liberarMatriz(a11, split);
     liberarMatriz(b00, split); liberarMatriz(b01, split);

@@ -1,3 +1,6 @@
+// ao2
+//nueva matriz transpuesta
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -5,29 +8,6 @@
 #include <chrono>
 using namespace std;
 using namespace std::chrono;
-
-void crear_arch(int n) {
-    ofstream archivo("matrices.txt");
-    archivo << "A " << n << " " << n << "\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int a = rand() % 1000;
-            archivo << a << " ";
-        }
-        archivo << "\n";
-    }
-
-    archivo << "B " << n << " " << n << "\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int b = rand() % 1000;
-            archivo << b << " ";
-        }
-        archivo << "\n";
-    }
-    
-    archivo.close();
-}
 
 void leerMatriz(ifstream& archivo, int** matriz, int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
@@ -66,11 +46,11 @@ int main() {
     file << "Orden\n";
     
     for (int j = 1; j <= iteraciones; j++) {
-        file << pow(2, j) << "x" << pow(2, j) << ": ";
-        int n = pow(2, j);
-        crear_arch(n);
+        int a = pow(2, j); 
+        string name = "matriz orden " + to_string(a) + "x" + to_string(a) + ".txt";
+        file << a << "x" << a << ": ";
 
-        ifstream archivo("matrices.txt");
+        ifstream archivo(name);
         if (!archivo.is_open()) {
             cerr << "Error al abrir el archivo!" << endl;
             return 1;
@@ -101,11 +81,14 @@ int main() {
         for (int i = 0; i < filas; i++) {
             C[i] = new int[columnas];
         }
+
         int** D = new int*[filas];
         for (int i = 0; i < filas; i++) {
             D[i] = new int[columnas];
         }
+
         Transposed(filas, B, D);
+
         auto start = high_resolution_clock::now();
         Transposed_matrix(filas, A, D, C);
         auto stop = high_resolution_clock::now();
@@ -124,7 +107,6 @@ int main() {
         delete[] D;
 
         archivo.close();
-        remove("matrices.txt");
     }
 
     file.close();

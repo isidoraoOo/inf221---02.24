@@ -18,13 +18,13 @@ int main(){
     cout<<"Iteraciones: ";
     cin>>n;
 
-    ofstream file("tiempos Sort ordenados.txt");
+    ofstream file("tiempos Sort desordenados.txt");
     file << "Tiempos de ejecucion\n";
     file << "Largo\n";
 
     for (int it = 1; it <= n; it++){
         int a = pow(2, it);
-        string name = "vector largo " + to_string(a) + " ordenado.txt";
+        string name = "vector largo " + to_string(a) + " desordenado.txt";
         ifstream archive(name);
         vector<int> V(a);
         read_file(archive, V, a);

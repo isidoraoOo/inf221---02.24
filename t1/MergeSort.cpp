@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include <cmath>
 #include <chrono>
+#include <string>
 using namespace std;
 using namespace std::chrono;
 
@@ -61,6 +62,14 @@ void merge(vector<int>& arr, int left,
     }
 }
 
+// Function to print a vector
+void printVector(vector<int>& arr)
+{
+    for (int i = 0; i < arr.size(); i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
 // begin is for left index and end is right index
 // of the sub-array of arr to be sorted
 void mergeSort(vector<int>& arr, int left, int right)
@@ -73,13 +82,13 @@ void mergeSort(vector<int>& arr, int left, int right)
     mergeSort(arr, mid + 1, right);
     merge(arr, left, mid, right);
 }
-
+/*
 int main(){
     int iteraciones;
     cout <<"Iteraciones: ";
     cin >> iteraciones;
 
-    ofstream file("tiempos MergeSort ordenados.txt");
+    ofstream file("tiempos MergeSort desordenados.txt");
     file << "Tiempos de ejecucion\n";
     file << "Largo\n";
 
@@ -102,5 +111,35 @@ int main(){
         file << a << ": " << duration.count() << " nanosegundos " << duration.count() / 1000 << " microsegundos " << duration.count() / 1e9 << " segundos" <<"\n";
     }
     file.close();
+    return 0;
+}*/
+
+int main() {
+    string nombre;
+    int a;
+
+    cout << "Nombre del archivo a ejecutar: " << endl;
+    getline(cin, nombre);
+    string name = nombre + ".txt";
+
+
+    cout << "Largo del vector a ordenar: " << endl;
+    cin >> a;
+    
+
+    ifstream archive(name);
+    if (!archive.is_open()) {
+        cerr << "Error al abrir el archivo!" << endl;
+        return 1;
+    }
+
+    vector<int> V(a);
+    read_file(archive, V, a);
+    archive.close();
+    cout<<"Vector inicial: "<<endl;
+    printVector(V);
+    mergeSort(V, 0, a-1);
+    cout<<"Vector ordenado: "<<endl;
+    printVector(V);
     return 0;
 }

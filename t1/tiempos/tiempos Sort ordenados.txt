@@ -1,0 +1,14 @@
+Tiempos de ejecucion
+Largo
+2: 600 nanosegundos 0 microsegundos 6e-07 segundos
+4: 900 nanosegundos 0 microsegundos 9e-07 segundos
+8: 1000 nanosegundos 1 microsegundos 1e-06 segundos
+16: 1100 nanosegundos 1 microsegundos 1.1e-06 segundos
+32: 3100 nanosegundos 3 microsegundos 3.1e-06 segundos
+64: 6100 nanosegundos 6 microsegundos 6.1e-06 segundos
+128: 12400 nanosegundos 12 microsegundos 1.24e-05 segundos
+256: 26500 nanosegundos 26 microsegundos 2.65e-05 segundos
+512: 57800 nanosegundos 57 microsegundos 5.78e-05 segundos
+1024: 127100 nanosegundos 127 microsegundos 0.0001271 segundos
+2048: 277100 nanosegundos 277 microsegundos 0.0002771 segundos
+4096: 540700 nanosegundos 540 microsegundos 0.0005407 segundos

@@ -1,0 +1,13 @@
+Tiempos de ejecucion
+Orden
+2x2: 33100 nanosegundos 33 microsegundos 3.31e-05 segundos
+4x4: 191800 nanosegundos 191 microsegundos 0.0001918 segundos
+8x8: 1317900 nanosegundos 1317 microsegundos 0.0013179 segundos
+16x16: 6927900 nanosegundos 6927 microsegundos 0.0069279 segundos
+32x32: 41782100 nanosegundos 41782 microsegundos 0.0417821 segundos
+64x64: 224639900 nanosegundos 224639 microsegundos 0.22464 segundos
+128x128: 587575700 nanosegundos 587575 microsegundos 0.587576 segundos
+256x256: 6959513700 nanosegundos 6959513 microsegundos 6.95951 segundos
+512x512: 35350741100 nanosegundos 35350741 microsegundos 35.3507 segundos
+1024x1024: 208356162800 nanosegundos 208356162 microsegundos 208.356 segundos
+2048x2048: 2405788342500 nanosegundos 2405788342 microsegundos 2405.79 segundos

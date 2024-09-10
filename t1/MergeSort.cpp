@@ -85,9 +85,9 @@ int main(){
 
     for (int j = 1; j <= iteraciones; j++){
         int a = pow(2, j);
-        string name = "vector largo " + to_string(a) + " ordenado.txt";
+        string name = "vector largo " + to_string(a) + " desordenado.txt";
         ifstream archive(name);
-        if (!archivo.is_open()) {
+        if (!archive.is_open()) {
             cerr << "Error al abrir el archivo!" << endl;
             return 1;
         }

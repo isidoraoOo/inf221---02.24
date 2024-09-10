@@ -52,33 +52,40 @@ void quickSort(vector<int>& arr, int low, int high) {
     }
 }
 
-int main(){
-    int iteraciones;
-    cout <<"Iteraciones: ";
-    cin >> iteraciones;
+// Function to print a vector
+void printVector(vector<int>& arr)
+{
+    for (int i = 0; i < arr.size(); i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
 
-    ofstream file("tiempos QuickSort desordenados.txt");
-    file << "Tiempos de ejecucion\n";
-    file << "Largo\n";
+int main() {
+    string nombre;
+    int a;
 
-    for (int j = 1; j <= iteraciones; j++){
-        int a = pow(2, j);
-        string name = "vector largo " + to_string(a) + " desordenado.txt";
-        ifstream archive(name);
-        if (!archive.is_open()) {
-            cerr << "Error al abrir el archivo!" << endl;
-            return 1;
-        }
+    cout << "Nombre del archivo a ejecutar: " << endl;
+    getline(cin, nombre);
+    string name = nombre + ".txt";
 
-        vector<int> V(a);
-        read_file(archive, V, a);
-        archive.close();
-        auto start = high_resolution_clock::now();
-        quickSort(V, 0, a-1);
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
-        file << a << ": " << duration.count() << " nanosegundos " << duration.count() / 1000 << " microsegundos " << duration.count() / 1e9 << " segundos" <<"\n";
+
+    cout << "Largo del vector a ordenar: " << endl;
+    cin >> a;
+    
+
+    ifstream archive(name);
+    if (!archive.is_open()) {
+        cerr << "Error al abrir el archivo!" << endl;
+        return 1;
     }
-    file.close();
+
+    vector<int> V(a);
+    read_file(archive, V, a);
+    archive.close();
+    cout<<"Vector inicial: "<<endl;
+    printVector(V);
+    quickSort(V, 0, a-1);
+    cout<<"Vector ordenado: "<<endl;
+    printVector(V);
     return 0;
 }

@@ -7,7 +7,7 @@ using namespace std;
 
 void create_file(int n, int type){
     int a = pow(2, n);
-    string name = "vector largo " + to_string(a) + " ordenado.txt";
+    string name = "vector largo " + to_string(a) + " desordenado.txt";
     ofstream file(name);
     int j = 0;
     if (type == 0){
@@ -28,10 +28,10 @@ void create_file(int n, int type){
 
 int main(){
     int n;
-    cout<<"Iteraciones: ";
+    cout<<"Iteraciones: "; //para crear más de un vector al mismo tiempo
     cin>>n;
     for (int i = 0; i < n; i++){
-        create_file(i+1, 0);
+        create_file(i+1, 1);
     }
     return 0;
 }

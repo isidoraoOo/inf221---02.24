@@ -1,33 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <cmath>
-#include <chrono>
+
 using namespace std;
-using namespace std::chrono;
-
-void crear_arch(int n) {
-    ofstream archivo("matrices.txt");
-    archivo << "A " << n << " " << n << "\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int a = rand() % 1000;
-            archivo << a << " ";
-        }
-        archivo << "\n";
-    }
-
-    archivo << "B " << n << " " << n << "\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            int b = rand() % 1000;
-            archivo << b << " ";
-        }
-        archivo << "\n";
-    }
-
-    archivo.close();
-}
 
 void leerMatriz(ifstream& archivo, int** matriz, int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
@@ -37,31 +12,35 @@ void leerMatriz(ifstream& archivo, int** matriz, int filas, int columnas) {
     }
 }
 
-void liberarMatriz(int** matriz, int n) {
-    for (int i = 0; i < n; i++) {
+void liberarMatriz(int** matriz, int filas) {
+    for (int i = 0; i < filas; i++) {
         delete[] matriz[i];
     }
     delete[] matriz;
 }
 
-int** crearMatriz(int n) {
-    int** matriz = new int*[n];
-    for (int i = 0; i < n; i++) {
-        matriz[i] = new int[n];
+int** crearMatriz(int filas, int columnas) {
+    int** matriz = new int*[filas];
+    for (int i = 0; i < filas; i++) {
+        matriz[i] = new int[columnas];
     }
     return matriz;
 }
 
-void sumarMatrices(int** A, int** B, int** C, int n) {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
+void sumarMatrices(int** A, int** B, int** C, int filas, int columnas) {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
             C[i][j] = A[i][j] + B[i][j];
+        }
+    }
 }
 
-void restarMatrices(int** A, int** B, int** C, int n) {
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
+void restarMatrices(int** A, int** B, int** C, int filas, int columnas) {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
             C[i][j] = A[i][j] - B[i][j];
+        }
+    }
 }
 
 void strassen(int** A, int** B, int** C, int n) {
@@ -72,28 +51,26 @@ void strassen(int** A, int** B, int** C, int n) {
 
     int split = n / 2;
 
-    // Crear submatrices
-    int** a00 = crearMatriz(split);
-    int** a01 = crearMatriz(split);
-    int** a10 = crearMatriz(split);
-    int** a11 = crearMatriz(split);
-    int** b00 = crearMatriz(split);
-    int** b01 = crearMatriz(split);
-    int** b10 = crearMatriz(split);
-    int** b11 = crearMatriz(split);
+    int** a00 = crearMatriz(split, split);
+    int** a01 = crearMatriz(split, split);
+    int** a10 = crearMatriz(split, split);
+    int** a11 = crearMatriz(split, split);
+    int** b00 = crearMatriz(split, split);
+    int** b01 = crearMatriz(split, split);
+    int** b10 = crearMatriz(split, split);
+    int** b11 = crearMatriz(split, split);
 
-    int** m1 = crearMatriz(split);
-    int** m2 = crearMatriz(split);
-    int** m3 = crearMatriz(split);
-    int** m4 = crearMatriz(split);
-    int** m5 = crearMatriz(split);
-    int** m6 = crearMatriz(split);
-    int** m7 = crearMatriz(split);
+    int** m1 = crearMatriz(split, split);
+    int** m2 = crearMatriz(split, split);
+    int** m3 = crearMatriz(split, split);
+    int** m4 = crearMatriz(split, split);
+    int** m5 = crearMatriz(split, split);
+    int** m6 = crearMatriz(split, split);
+    int** m7 = crearMatriz(split, split);
 
-    int** temp1 = crearMatriz(split);
-    int** temp2 = crearMatriz(split);
+    int** temp1 = crearMatriz(split, split);
+    int** temp2 = crearMatriz(split, split);
 
-    // Separar matrices en submatrices
     for (int i = 0; i < split; i++) {
         for (int j = 0; j < split; j++) {
             a00[i][j] = A[i][j];
@@ -108,62 +85,47 @@ void strassen(int** A, int** B, int** C, int n) {
         }
     }
 
-    // Calcular los 7 productos de Strassen
-
-    // M1 = (A11 + A22) * (B11 + B22)
-    sumarMatrices(a00, a11, temp1, split); // A00 + A11
-    sumarMatrices(b00, b11, temp2, split); // B00 + B11
+    sumarMatrices(a00, a11, temp1, split, split);
+    sumarMatrices(b00, b11, temp2, split, split);
     strassen(temp1, temp2, m1, split);
 
-    // M2 = (A21 + A22) * B11
-    sumarMatrices(a10, a11, temp1, split); // A10 + A11
+    sumarMatrices(a10, a11, temp1, split, split);
     strassen(temp1, b00, m2, split);
 
-    // M3 = A11 * (B12 - B22)
-    restarMatrices(b01, b11, temp1, split); // B01 - B11
+    restarMatrices(b01, b11, temp1, split, split);
     strassen(a00, temp1, m3, split);
 
-    // M4 = A22 * (B21 - B11)
-    restarMatrices(b10, b00, temp1, split); // B10 - B00
+    restarMatrices(b10, b00, temp1, split, split);
     strassen(a11, temp1, m4, split);
 
-    // M5 = (A11 + A12) * B22
-    sumarMatrices(a00, a01, temp1, split); // A00 + A01
+    sumarMatrices(a00, a01, temp1, split, split);
     strassen(temp1, b11, m5, split);
 
-    // M6 = (A21 - A11) * (B11 + B12)
-    restarMatrices(a10, a00, temp1, split); // A10 - A00
-    sumarMatrices(b00, b01, temp2, split); // B00 + B01
+    restarMatrices(a10, a00, temp1, split, split);
+    sumarMatrices(b00, b01, temp2, split, split);
     strassen(temp1, temp2, m6, split);
 
-    // M7 = (A12 - A22) * (B21 + B22)
-    restarMatrices(a01, a11, temp1, split); // A01 - A11
-    sumarMatrices(b10, b11, temp2, split); // B10 + B11
+    restarMatrices(a01, a11, temp1, split, split);
+    sumarMatrices(b10, b11, temp2, split, split);
     strassen(temp1, temp2, m7, split);
 
-    // Calcular C00, C01, C10, C11
-    int** c00 = crearMatriz(split);
-    int** c01 = crearMatriz(split);
-    int** c10 = crearMatriz(split);
-    int** c11 = crearMatriz(split);
+    int** c00 = crearMatriz(split, split);
+    int** c01 = crearMatriz(split, split);
+    int** c10 = crearMatriz(split, split);
+    int** c11 = crearMatriz(split, split);
 
-    // C00 = M1 + M4 - M5 + M7
-    sumarMatrices(m1, m4, temp1, split);
-    restarMatrices(temp1, m5, temp2, split);
-    sumarMatrices(temp2, m7, c00, split);
+    sumarMatrices(m1, m4, temp1, split, split);
+    restarMatrices(temp1, m5, temp2, split, split);
+    sumarMatrices(temp2, m7, c00, split, split);
 
-    // C01 = M3 + M5
-    sumarMatrices(m3, m5, c01, split);
+    sumarMatrices(m3, m5, c01, split, split);
 
-    // C10 = M2 + M4
-    sumarMatrices(m2, m4, c10, split);
+    sumarMatrices(m2, m4, c10, split, split);
 
-    // C11 = M1 - M2 + M3 + M6
-    restarMatrices(m1, m2, temp1, split);
-    sumarMatrices(temp1, m3, temp2, split);
-    sumarMatrices(temp2, m6, c11, split);
+    restarMatrices(m1, m2, temp1, split, split);
+    sumarMatrices(temp1, m3, temp2, split, split);
+    sumarMatrices(temp2, m6, c11, split, split);
 
-    // Reconstruir la matriz resultado
     for (int i = 0; i < split; i++) {
         for (int j = 0; j < split; j++) {
             C[i][j] = c00[i][j];
@@ -173,7 +135,6 @@ void strassen(int** A, int** B, int** C, int n) {
         }
     }
 
-    // Liberar memoria de submatrices y temporales
     liberarMatriz(a00, split); liberarMatriz(a01, split);
     liberarMatriz(a10, split); liberarMatriz(a11, split);
     liberarMatriz(b00, split); liberarMatriz(b01, split);
@@ -187,52 +148,79 @@ void strassen(int** A, int** B, int** C, int n) {
     liberarMatriz(c11, split);
 }
 
-int main() {
-    int iteraciones;
-    cout << "Iteraciones: ";
-    cin >> iteraciones;
-
-    ofstream file("tiempos_mtrx_strassen.txt");
-    file << "Tiempos de ejecucion\n";
-    file << "Orden\n";
-
-    for (int j = 1; j <= iteraciones; j++) {
-        file << pow(2, j) << "x" << pow(2, j) << ": ";
-        int n = pow(2, j);
-        crear_arch(n);
-
-        ifstream archivo("matrices.txt");
-        if (!archivo.is_open()) {
-            cerr << "Error al abrir el archivo!" << endl;
-            return 1;
+void printMatrix(int** mtrx, int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << mtrx[i][j] << " ";
         }
+        cout << endl;
+    }
+}
 
-        int filas, columnas;
-        string nombreMatriz;
+int main() {
+    string nombre;
+    int filasA, columnasA, filasB, columnasB;
 
-        archivo >> nombreMatriz >> filas >> columnas;
-        int** A = crearMatriz(filas);
-        leerMatriz(archivo, A, filas, columnas);
+    cout << "Nombre del archivo a ejecutar (sin extensión): " << endl;
+    getline(cin, nombre);
+    string name = nombre + ".txt";
 
-        archivo >> nombreMatriz >> filas >> columnas;
-        int** B = crearMatriz(filas);
-        leerMatriz(archivo, B, filas, columnas);
-
-        int** C = crearMatriz(filas);
-
-        auto start = high_resolution_clock::now();
-        strassen(A, B, C, filas);
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<nanoseconds>(stop - start);
-        file << duration.count() << " nanosegundos " << duration.count() / 1000 << " microsegundos " << duration.count() / 1e9 << " segundos" <<"\n";
-
-        liberarMatriz(A, filas);
-        liberarMatriz(B, filas);
-        liberarMatriz(C, filas);
-        archivo.close();
-        remove("matrices.txt");
+    ifstream archivo(name);
+    if (!archivo.is_open()) {
+        cerr << "Error al abrir el archivo!" << endl;
+        return 1;
     }
 
-    file.close();
+    archivo >> nombre >> filasA >> columnasA;
+
+    int** A = new int*[filasA];
+    for (int i = 0; i < filasA; i++) {
+        A[i] = new int[columnasA];
+    }
+
+    leerMatriz(archivo, A, filasA, columnasA);
+
+    archivo >> nombre >> filasB >> columnasB;
+
+    int** B = new int*[filasB];
+    for (int i = 0; i < filasB; i++) {
+        B[i] = new int[columnasB];
+    }
+
+    leerMatriz(archivo, B, filasB, columnasB);
+
+    archivo.close();
+
+    if (columnasA != filasB) {
+        cerr << "Error: El número de columnas de la matriz A debe ser igual al número de filas de la matriz B." << endl;
+        return 1;
+    }
+
+    int** C = new int*[filasA];
+    for (int i = 0; i < filasA; i++) {
+        C[i] = new int[columnasB];
+    }
+
+    strassen(A, B, C, filasA);
+
+    cout << "Matriz A: " << endl;
+    printMatrix(A, filasA, columnasA);
+    cout << "Matriz B: " << endl;
+    printMatrix(B, filasB, columnasB);
+    cout << "Producto de las matrices: " << endl;
+    printMatrix(C, filasA, columnasB);
+
+    for (int i = 0; i < filasA; i++) {
+        delete[] A[i];
+        delete[] C[i];
+    }
+    delete[] A;
+    delete[] C;
+
+    for (int i = 0; i < filasB; i++) {
+        delete[] B[i];
+    }
+    delete[] B;
+
     return 0;
 }

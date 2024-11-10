@@ -1,0 +1,11 @@
+orden.
+1. Introduccion. Contextualizar el problema, sus motivaciones.
+2. Diseño y análisis de algoritmos. Desribir solucion, pseudocodigo, paso a paso del algoritmo en diferentes escenarios, analisis temporal y espacial, análiis de cómo las transposiciones y costos varialbes impactan la complejidad. Esto para cada paradigma.
+3. Implementacion. Entrada: dos cadenas S1 y S2. costos por cada operacion.
+Salida: Distancia minima d eedicion (y la secuencia de operaciones con el costo mas bajo)
+4. Experimentos. Especificar el hardware. Datasets: Al menos 5 archivos. Los casos de prueba deben incluir ejemplos donde las cadenas estén vacías, carácteres repetidos, donde las transposiciones son necesarias.
+Resultados: Graficos, tablas, etc.
+5. Conclusiones.
+
+Algoritmos: Listos
+datasets:

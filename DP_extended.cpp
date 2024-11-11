@@ -57,11 +57,7 @@ int main() {
         snprintf(num, sizeof(num), "%02d", i);
         string arch = num;
         arch += ".txt";
-<<<<<<< HEAD
         //second_file << "Archivo: " << arch << endl;
-=======
-        second_file << "Archivo: " << arch << endl;
->>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
 
         ifstream file(arch);
         if (file) {
@@ -89,16 +85,11 @@ int main() {
                         }
                     }
                     //cout << "S1: " << S1 << " S2: " << S2 << endl;
-<<<<<<< HEAD
                     auto start = std::chrono::system_clock::now();
                     int edit_distance = editDistDP(S1, S2, costos);
                     auto end = std::chrono::system_clock::now();
                     chrono::duration<float, milli> duration = end - start;
                     second_file << edit_distance << " " << duration.count() << endl;
-=======
-                    int edit_distance = editDistDP(S1, S2, costos);
-                    second_file << edit_distance << endl;
->>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
                 }
             }
         } else {
@@ -106,6 +97,7 @@ int main() {
         }
         file.close();
         second_file.close();
+        cout<<"Archivo "<<arch<<" listo :3"<<endl;
     }
 
     return 0;

@@ -15,6 +15,8 @@ void S1_empty(){
         file << " " << palabra << endl;;
     }
     file.close();
+    cout<<"Archivo 1 listo :3"<<endl;
+
 }
 
 void S2_empty(){
@@ -30,6 +32,8 @@ void S2_empty(){
         file << " " << endl;
     }
     file.close();
+    cout<<"Archivo 2 listo :3"<<endl;
+
 }
 
 void repeated_ch(){
@@ -51,6 +55,8 @@ void repeated_ch(){
         file << palabra1 << " " << palabra2 << endl;
     }
     file.close();
+    cout<<"Archivo 3 listo :3"<<endl;
+
 }
 
 
@@ -63,7 +69,7 @@ void swap(string& word, int a, int b){
 string transpose(string& word, int n){
     // n is the number of transpositions
     for (int i = 0; i < n; i++){
-        int a = rand() % (word.length() - 1);
+        int a = rand() % (word.length() - 2);
         swap(word, a, a + 1);
     }
     return word;
@@ -81,7 +87,7 @@ void need_transpositions(){
     for (int j = 0; j < 2048; j++){
         string palabra = "";
         
-        for (int i = 0; i < 1 + rand() % 1000; i++){
+        for (int i = 0; i < 3 + rand() % 2048; i++){
             char ch = 'a' + rand() % 26;
             palabra += ch;
         }
@@ -93,36 +99,15 @@ void need_transpositions(){
     }
 
     file.close();
+    cout<<"Archivo 4 listo :3"<<endl;
 }
 
-<<<<<<< HEAD
-=======
-/*
-void need_transpositions(){
-    ofstream file("04.txt");
-    srand(time(NULL));
-    for (int j = 0; j < 20; j++){
-        string palabra = "";
-        for (int i = 0; i < 1 + rand() % 200; i++){
-            char ch = 'a' + rand() % 26;
-            palabra += ch;
-        }
-        int a = 1 + rand() % (palabra.length()/2);
-        string tr = palabra;
-        tr = transpose(tr, a);
-        file << tr << " " << palabra << endl;
-    }
-    file.close();
-}
-*/
-
->>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
 int main()
 {
     S1_empty();
     S2_empty();
     repeated_ch();
-    //need_transpositions();
+    need_transpositions();
     return 0;
 }
 

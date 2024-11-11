@@ -95,6 +95,28 @@ void need_transpositions(){
     file.close();
 }
 
+<<<<<<< HEAD
+=======
+/*
+void need_transpositions(){
+    ofstream file("04.txt");
+    srand(time(NULL));
+    for (int j = 0; j < 20; j++){
+        string palabra = "";
+        for (int i = 0; i < 1 + rand() % 200; i++){
+            char ch = 'a' + rand() % 26;
+            palabra += ch;
+        }
+        int a = 1 + rand() % (palabra.length()/2);
+        string tr = palabra;
+        tr = transpose(tr, a);
+        file << tr << " " << palabra << endl;
+    }
+    file.close();
+}
+*/
+
+>>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
 int main()
 {
     S1_empty();

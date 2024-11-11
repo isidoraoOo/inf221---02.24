@@ -37,6 +37,7 @@ int levenshteinRecursive(const string& S1, const string& S2, int m, int n, vecto
 
 // Drivers code
 int main() {
+<<<<<<< HEAD
     // Se definen los costos de la forma: {insertar, remover, reemplazar, transponer}
     vector<int> costos = {1, 1, 1, 1};
     int j = 11;
@@ -90,6 +91,16 @@ int main() {
         file.close();
         second_file.close();
     }
+=======
+    vector<int> costs = {1, 1, 1, 1};
+
+    string S1 = "danlfzwoir";
+    string S2 = "qsvuvwtlwc";
+
+    // Function Call
+    int distance = levenshteinRecursive(S1, S2, S1.length(), S2.length(), costs);
+    cout << "Levenshtein Distance (including Transposition): " << distance << endl;
+>>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
 
     return 0;
 }

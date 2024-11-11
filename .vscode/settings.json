@@ -4,7 +4,11 @@
         "iostream": "cpp",
         "fstream": "cpp",
         "ostream": "cpp",
+<<<<<<< HEAD
         "iosfwd": "cpp",
         "chrono": "cpp"
+=======
+        "iosfwd": "cpp"
+>>>>>>> b70d59a4a66baa4ff6a51fff10b8365b9f6679c2
     }
 }

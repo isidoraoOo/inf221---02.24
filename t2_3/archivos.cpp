@@ -6,14 +6,15 @@ using namespace std;
 void S1_empty(){
     ofstream file ("01.txt");
     srand(time(NULL));
-    for (int i = 0; i < 200; i++){
+    for (int i = 0; i < 100; i++){
         string palabra = "";
-        for (int j = 0; j < 1 + rand() % 50; j++){
+        for (int j = 0; j < 1 + rand() % 25; j++){
             char ch = 'a' + rand() % 26;
             palabra += ch;
         }
         file << " " << palabra << endl;;
     }
+    file << "Costos: 1 insert, 1 remove, 2 replace, 3 transpose";
     file.close();
     cout<<"Archivo 1 listo :3"<<endl;
 
@@ -22,15 +23,16 @@ void S1_empty(){
 void S2_empty(){
     ofstream file ("02.txt");
     srand(time(NULL));
-    for (int i = 0; i < 200; i++){
+    for (int i = 0; i < 100; i++){
         string palabra = "";
-        for (int j = 0; j < 1 + rand() % 50; j++){
+        for (int j = 0; j < 1 + rand() % 25; j++){
             char ch = 'a' + rand() % 26;
             palabra += ch;
         }
         file << palabra;
         file << " " << endl;
     }
+    file << "Costos: 1 insert, 1 remove, 2 replace, 3 transpose";
     file.close();
     cout<<"Archivo 2 listo :3"<<endl;
 
@@ -39,21 +41,22 @@ void S2_empty(){
 void repeated_ch(){
     ofstream file("03.txt");
     srand(time(NULL));
-    for (int j = 0; j < 200; j++){
+    for (int j = 0; j < 100; j++){
         string palabra1 = "", palabra2 = "";
         
-        for (int i = 0; i < 1 + rand() % 50; i++) {
+        for (int i = 0; i < 1 + rand() % 25; i++) {
             char ch = 'a' + rand() % 2;
             palabra1 += ch;
         }
 
-        for (int i = 0; i < 1 + rand() % 50; i++) {
+        for (int i = 0; i < 1 + rand() % 25; i++) {
             char ch = 'a' + rand() % 2;
             palabra2 += ch;
         }
 
         file << palabra1 << " " << palabra2 << endl;
     }
+    file << "Costos: 1 insert, 1 remove, 2 replace, 3 transpose";
     file.close();
     cout<<"Archivo 3 listo :3"<<endl;
 
@@ -84,10 +87,10 @@ void need_transpositions(){
     }
     
     srand(time(NULL));
-    for (int j = 0; j < 200; j++){
+    for (int j = 0; j < 100; j++){
         string palabra = "";
         
-        for (int i = 0; i < 3 + rand() % 50; i++){
+        for (int i = 0; i < 3 + rand() % 25; i++){
             char ch = 'a' + rand() % 26;
             palabra += ch;
         }
@@ -97,7 +100,7 @@ void need_transpositions(){
         tr = transpose(tr, a);
         file << tr << " " << palabra << endl;
     }
-
+    file << "Costos: 1 insert, 1 remove, 2 replace, 3 transpose";
     file.close();
     cout<<"Archivo 4 listo :3"<<endl;
 }
@@ -128,7 +131,7 @@ Salida esperada = 8 * (costo insercion)
 1.3 S2 vacía
 S1 = "Paris"
 S2 = ""
-Salida esperada = 50 * (costo eliminacion)
+Salida esperada = 25 * (costo eliminacion)
 
 2 Caracteres repetidos
 

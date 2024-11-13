@@ -38,7 +38,7 @@ int levenshteinRecursive(const string& S1, const string& S2, int m, int n, vecto
 // Drivers code
 int main() {
     // Se definen los costos de la forma: {insertar, remover, reemplazar, transponer}
-    vector<int> costos = {1, 1, 1, 1};
+    vector<int> costos = {1, 1, 2, 3};
     int j = 11;
     for (int i = 1; i < 5; i++) {
         string arch_2 = to_string(j);
@@ -54,6 +54,10 @@ int main() {
         if (file) {
             string line, palabra, S1, S2;
             while (getline(file, line)) {
+                if (line == "Costos: 1 insert, 1 remove, 2 replace, 3 transpose"){
+                    break;
+                }
+                int largo = 0;
                 vector<string> cadenas;
                 stringstream ss(line);
                 while (ss >> palabra) {
@@ -75,12 +79,12 @@ int main() {
                             S2 = "";
                         }
                     }
-                    //cout << "S1: " << S1 << " S2: " << S2 << endl;
+                    int largo = max(S1.length(), S2.length());
                     auto start = std::chrono::system_clock::now();
                     int edit_distance = levenshteinRecursive(S1, S2, S1.length(), S2.length(), costos);
                     auto end = std::chrono::system_clock::now();
                     chrono::duration<float, milli> duration = end - start;
-                    second_file << edit_distance << " " << duration.count() << endl;
+                    second_file << largo << " " << edit_distance << " " << duration.count() << endl;
                 }
             }
         } else {

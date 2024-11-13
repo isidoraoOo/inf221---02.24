@@ -47,11 +47,6 @@ int editDistDP(const string &S1, const string &S2, vector<int>& costos) {
 int main() {
     // Se definen los costos de la forma: {insertar, remover, reemplazar, transponer}
     vector<int> costos = {1, 1, 1, 1};
-    int j = 10;
-    for (int i = 1; i < 5; i++) {
-        string arch_2 = to_string(j);
-        arch_2 += ".txt";
-        j += 10;
     int j = 21;
     for (int i = 1; i < 5; i++) {
         string arch_2 = to_string(j);
@@ -62,12 +57,14 @@ int main() {
         snprintf(num, sizeof(num), "%02d", i);
         string arch = num;
         arch += ".txt";
-        //second_file << "Archivo: " << arch << endl;
-
+        
         ifstream file(arch);
         if (file) {
             string line, palabra, S1, S2;
             while (getline(file, line)) {
+                if (line == "Costos: 1 insert, 1 remove, 2 replace, 3 transpose"){
+                    break;
+                }
                 vector<string> cadenas;
                 stringstream ss(line);
                 while (ss >> palabra) {
@@ -89,12 +86,12 @@ int main() {
                             S2 = "";
                         }
                     }
-                    //cout << "S1: " << S1 << " S2: " << S2 << endl;
+                    int largo = max(S1.length(), S2.length());
                     auto start = std::chrono::system_clock::now();
                     int edit_distance = editDistDP(S1, S2, costos);
                     auto end = std::chrono::system_clock::now();
                     chrono::duration<float, milli> duration = end - start;
-                    second_file << edit_distance << " " << duration.count() 
+                    second_file << largo << " " << edit_distance << " " << duration.count() << endl;
                 }
             }
         } else {

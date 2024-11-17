@@ -1,7 +1,0 @@
-los archivos finales tendrán las forma
-
-max(w1.length(), w2.length()) edit_distance(w1, w2) tiempo_ejecucion
-
-después se graficará:
-largo vs tiempo
-distancia vs tiempo

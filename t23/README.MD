@@ -4,7 +4,7 @@ Se deben tener los archivos `archivos.cpp`, `archivos_costos.cpp`, `fuerza_bruta
 
 ## Pasos para la compilación y ejecución:
 
-1. **Compilar y ejecutar los archivos detallados a continuación con el compilador de C++:**
+1. **Estando en el directorio, compilar y ejecutar los archivos detallados a continuación con el compilador de C++:**
     ```bash
     g++ archivos_costos.cpp -o ejecutable1
     ./ejecutable1
